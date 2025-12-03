@@ -6,6 +6,11 @@ pipeline {
   }
 
   stages {
+    state('test') {
+        steps {
+            sh 'go test -v ./...'
+        }
+    }
     stage('build') {
       steps {
         sh 'go build main.go'
