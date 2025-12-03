@@ -5,9 +5,12 @@ pipeline {
     go '1.24.1'
   }
 
-  stage('build') {
-    step {
-      sh 'go build main.go'
+  stages {
+    stage('build') {
+      step {
+        sh 'go build main.go'
+      }
     }
   }
+  
 }
