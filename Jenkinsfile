@@ -6,7 +6,7 @@ pipeline {
   }
 
   stages {
-    state('test') {
+    stage('test') {
         steps {
             sh 'go test -v ./...'
         }
