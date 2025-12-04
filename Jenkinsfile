@@ -18,8 +18,11 @@ pipeline {
     }
 
     stage('deploy') {
-        steps {
-            sh 'scp -o StrictHostKeyChecking=no main laborant@target:~'
+
+        withCredentials([sshUserPrivateKey(credentialsId: '4ac431c4-0f8a-4c55-9bd5-1f95f9a8c444', keyFileVariable: 'keyfile')]) {
+            steps {
+                sh 'scp -o StrictHostKeyChecking=no -i $keyfile  main laborant@target:~'
+            }
         }
     }
   }
