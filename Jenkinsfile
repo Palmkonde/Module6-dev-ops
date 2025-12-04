@@ -24,7 +24,6 @@ pipeline {
                     sh 'scp -o StrictHostKeyChecking=no -i "$keyfile"  main laborant@target:~'
                 }
             }
-        }
     }
   }
   
