@@ -2,7 +2,7 @@
   tasks:
     - name: Copy the artifact
       copy:
-        src: main
+        src: /var/lib/jenkins/workspace/myapp/main
         dest: /home/laborant/main
 
     - name: Create a unit file
