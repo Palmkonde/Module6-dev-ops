@@ -21,7 +21,7 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'myapp', keyFileVariable: 'KEYFILE', usernameVariable: 'USERNAME')]) {
                     // sh 'scp -o StrictHostKeyChecking=no -i ${KEYFILE}  main ${USERNAME}@target:~'
-                    sh 'ansible-playbook --inventory hosts.ini --keyfile ${KEYFILE} playbook.yml '
+                    sh 'ansible-playbook --inventory hosts.ini --private-key ${KEYFILE} playbook.yml '
                 }
             }
     }
