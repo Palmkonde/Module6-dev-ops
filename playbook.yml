@@ -4,6 +4,7 @@
       copy:
         src: /var/lib/jenkins/workspace/myapp/main
         dest: /home/laborant/main
+        mode: 0755
 
     - name: Create a unit file
       become: True
