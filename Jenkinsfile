@@ -17,6 +17,12 @@ pipeline {
       }
     }
 
+    stage('build docker images') {
+        steps {
+            sh 'docker build . --tag myapp'
+        }
+    }
+
     stage('deploy') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'myapp', keyFileVariable: 'KEYFILE', usernameVariable: 'USERNAME')]) {
