@@ -23,13 +23,13 @@ pipeline {
         }
     }
 
-    stage('deploy') {
-            steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'myapp', keyFileVariable: 'KEYFILE', usernameVariable: 'USERNAME')]) {
-                    sh 'scp -o StrictHostKeyChecking=no -i ${KEYFILE}  main ${USERNAME}@target:~'
-                }
-            }
-    }
+    // stage('deploy') {
+    //         steps {
+    //             withCredentials([sshUserPrivateKey(credentialsId: 'myapp', keyFileVariable: 'KEYFILE', usernameVariable: 'USERNAME')]) {
+    //                 sh 'scp -o StrictHostKeyChecking=no -i ${KEYFILE}  main ${USERNAME}@target:~'
+    //             }
+    //         }
+    // }
   }
   
 }
