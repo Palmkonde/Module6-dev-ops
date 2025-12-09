@@ -19,17 +19,19 @@ pipeline {
 
     stage('build docker images') {
         steps {
-            sh 'docker build . --tag myapp'
+            sh 'docker build . --tag ttl.sh/palmapp:1h'
+            sh 'docker push ttl.sh/palmapp:1h'
         }
     }
 
-    // stage('deploy') {
-    //         steps {
-    //             withCredentials([sshUserPrivateKey(credentialsId: 'myapp', keyFileVariable: 'KEYFILE', usernameVariable: 'USERNAME')]) {
-    //                 sh 'scp -o StrictHostKeyChecking=no -i ${KEYFILE}  main ${USERNAME}@target:~'
-    //             }
-    //         }
-    // }
+    stage('deploy') {
+            steps {
+                withCredentials([sshUserPrivateKey(credentialsId: 'myapp', keyFileVariable: 'KEYFILE', usernameVariable: 'USERNAME')]) {
+                    sh "ssh -o StrictHostKeyChecking -i ${KEYFILE} ${USERNAME}@docker 'docker pull ttl.sh/palmapp:1h'"
+                    sh "ssh -o StrictHostKeyChecking -i ${KEYFILE} ${USERNAME}@docker 'docker run --rm -dit -p 4444:4444 ttl.sh/palmapp:1h'"
+                }
+            }
+    }
   }
   
 }
