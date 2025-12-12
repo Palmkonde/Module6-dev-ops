@@ -1,4 +1,4 @@
-# Expose port from # https://kubernetes.io/docs/concepts/workloads/pods/
+# Expose port 
 apiVersion: v1
 kind: Service
 metadata:
@@ -8,7 +8,7 @@ metadata:
 
 spec:
   selector:
-    app: my:app
+    app: myapp
   type: ClusterIP 
 
 
