@@ -32,7 +32,8 @@ pipeline {
     stage('deploy to Kubernets') {
         steps {
             withKubeConfig(credentialsId: 'myapikey', serverUrl: 'https://kubernetes:6443') {
-                sh 'kubectl apply -f deployment.yaml'
+                // sh 'kubectl apply -f deployment.yaml'
+                sh 'kubectl apply -f pods.yaml'
                 sh 'kubectl apply -f service.yaml'
             }
         }

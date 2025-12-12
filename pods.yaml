@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+  name: myapp
+
+spec:
+  container:
+    - image: ttl.sh/palmapp:2h
+      name: myapp
