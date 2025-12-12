@@ -20,17 +20,22 @@ pipeline {
     stage('build docker images') {
         steps {
             sh 'docker build . --tag ttl.sh/palmapp:2h'
+        }
+    }
+
+    stage('push docker image') {
+        steps {
             sh 'docker push ttl.sh/palmapp:2h'
         }
     }
 
-    stage('deploy') {
-            steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'myapp', keyFileVariable: 'KEYFILE', usernameVariable: 'USERNAME')]) {
-                    sh "ssh -o StrictHostKeyChecking=no -i ${KEYFILE} ${USERNAME}@docker 'docker pull ttl.sh/palmapp:2h'"
-                    sh "ssh -o StrictHostKeyChecking=no -i ${KEYFILE} ${USERNAME}@docker 'docker run --rm -dit -p 4444:4444 ttl.sh/palmapp:2h'"
-                }
+    stage('deploy to Kubernets') {
+        steps {
+            withKubeConfig(credentialsId: 'myapikey', serverUrl: 'https://kubernetes:6443') {
+                kubectl apply -f deployment.yaml
+                kubectl apply -f service.yaml
             }
+        }
     }
   }
   

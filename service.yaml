@@ -1,0 +1,19 @@
+# Expose port from # https://kubernetes.io/docs/concepts/workloads/pods/
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: myapp
+  name: myapp-deployment
+
+spec:
+  selector:
+    app: my:app
+  type: ClusterIP 
+
+
+  ports:
+    - port: 4444
+      protocol: TCP
+      targetPort: 4444
+
