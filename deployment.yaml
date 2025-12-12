@@ -3,10 +3,15 @@ kind: Deployment
 metadata:
   name: myapp-deployment
   labels:
-  app: myapp
+    app: myapp
 
 spec:
   replicas: 3
+
+  # select pod to manage
+  selector:
+    matchLabels:
+      app: myapp
 
   # Pod definition
   template:
@@ -14,14 +19,10 @@ spec:
       labels:
         app: myapp
 
-  # pod spec
-  spec:
-    containers:
-    - name: myapp
-      image: ttl.sh/palmapp:2h
+    # pod spec
+    spec:
+      containers:
+      - name: myapp
+        image: ttl.sh/palmapp:2h
 
-  # select pod to manage
-  selector:
-    matchLabels:
-      app: myapp
 
