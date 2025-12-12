@@ -9,7 +9,8 @@ metadata:
 spec:
   selector:
     app: myapp
-  type: ClusterIP 
+
+  type: NodePort 
 
   ports:
     - port: 4444
