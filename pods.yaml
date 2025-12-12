@@ -2,8 +2,12 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: myapp
+  labels:
+    app: myapp
 
 spec:
   containers:
-    - image: ttl.sh/palmapp:2h
-      name: myapp
+    - name: myapp
+      image: ttl.sh/palmapp:2h
+      ports:
+        - containerPort: 4444
