@@ -4,6 +4,7 @@ kind: Service
 metadata:
   labels:
     app: myapp
+  name: myapp
 
 spec:
   selector:
