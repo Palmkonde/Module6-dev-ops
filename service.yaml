@@ -4,13 +4,11 @@ kind: Service
 metadata:
   labels:
     app: myapp
-  name: myapp-deployment
 
 spec:
   selector:
     app: myapp
   type: ClusterIP 
-
 
   ports:
     - port: 4444
