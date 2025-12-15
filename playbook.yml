@@ -3,15 +3,22 @@
     - name: Copy the artifact
       copy:
         src: /var/lib/jenkins/workspace/myapp/main
-        dest: /home/laborant/main
+        dest: /home/ubuntu/main
         mode: 0755
 
     - name: Create a unit file
       become: True
       copy:
         src: myapp.service
-        dest: 
-          /etc/systemd/system/myapp.service
+        dest: /etc/systemd/system/myapp.service
+
+    - name: Open port 4444 in firewall
+      become: True
+      community.general.ufw:
+        rule: allow
+        port: '4444'
+        proto: tcp
+      ignore_errors: yes
 
     - name: Start the service
       become: True

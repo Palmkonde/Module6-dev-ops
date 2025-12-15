@@ -13,15 +13,19 @@ pipeline {
     }
     stage('build') {
       steps {
-        sh 'go build main.go'
+        sh 'go build -o main main.go'
       }
     }
 
     stage('deploy') {
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'myapp', keyFileVariable: 'KEYFILE', usernameVariable: 'USERNAME')]) {
-                    // sh 'scp -o StrictHostKeyChecking=no -i ${KEYFILE}  main ${USERNAME}@target:~'
-                    sh 'ansible-playbook --inventory hosts.ini --private-key ${KEYFILE} playbook.yml '
+                withCredentials([sshUserPrivateKey(credentialsId: 'mykey', keyFileVariable: 'KEYFILE', usernameVariable: 'USERNAME')]) {
+                    // sh 'ansible-playbook --inventory hosts.ini --private-key ${KEYFILE} playbook.yml '
+                    sh '''
+                        ansible-playbook --inventory=hosts.ini \
+                            --private-key=${KEYFILE} \
+                            playbook.yml 
+                    '''
                 }
             }
     }
