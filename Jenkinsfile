@@ -24,6 +24,7 @@ pipeline {
                     sh '''
                         ansible-playbook --inventory=hosts.ini \
                             --private-key=${KEYFILE} \
+                            -e "ansible_ssh_common_args='-o StrictHostKeyChecking=no'" \
                             playbook.yml 
                     '''
                 }
