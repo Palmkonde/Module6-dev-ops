@@ -40,6 +40,7 @@ pipeline {
                     withCredentials([sshUserPrivateKey(credentialsId: 'targetkey', keyFileVariable: 'KEYFILE', usernameVariable: 'USERNAME')]) {
                         sh """
                             ansible-playbook --inventory ./target/host.ini \
+                            -e "ansible_ssh_common_args='-o StrictHostKeyChecking=no'" \
                             --private-key ${KEYFILE} ./target/playbook.yml
                         """
                     }
