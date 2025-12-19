@@ -2,13 +2,13 @@
   tasks:
     - name: Copy index.js 
       copy:
-        src: /var/lib/jenkins/workspace/myapp/target/index.js
+        src: /var/lib/jenkins/workspace/myapp/index.js
         dest: /home/laborant/index.js
         mode: 0755
 
     - name: Copy package.json
       copy:
-        src: /var/lib/jenkins/workspace/myapp/target/package.json
+        src: /var/lib/jenkins/workspace/myapp/package.json
         dest: /home/laborant/package.json
         mode: 0644
 
