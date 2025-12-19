@@ -1,14 +1,25 @@
 pipeline {
   agent any
+  
+  tool {
+    nodejs 'node24'
+  }
+
 
   stages {
-    stage('Test') {
+    stage('Install packages') {
         steps {
-            nodejs('node24') {
-                sh 'node --test'
-            }
+            sh 'npm install'
         }
     }
+
+
+    stage('Test') {
+        steps {
+            sh 'node --test'
+        }
+    }
+    
 
     // stage('Deploy target') {
     //         steps {
