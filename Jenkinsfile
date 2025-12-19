@@ -38,12 +38,12 @@ pipeline {
             stage('Deploy to target') {
                 steps {
                     withCredentials([sshUserPrivateKey(credentialsId: 'targetkey', keyFileVariable: 'KEYFILE', usernameVariable: 'USERNAME')]) {
-                        sh """
-                            ansible-playbook --inventory ./target/host.ini \
+                        sh '''
+                            ansible-playbook --inventory=./target/host.ini \
                             --private-key=${KEYFILE} \
                             -e "ansible_ssh_common_args='-o StrictHostKeyChecking=no'" \
                             ./target/playbook.yml
-                        """
+                        '''
                     }
                 }
             }
