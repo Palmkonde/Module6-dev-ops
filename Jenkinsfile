@@ -21,7 +21,7 @@ pipeline {
     }
 
     stage('Build Docker Image') {
-        stpes {
+        steps {
             sh 'docker build --tag ttl.sh/palmapp:1h .'
         }
 
@@ -50,10 +50,20 @@ pipeline {
                steps {
                     withCredentials([sshUserPrivateKey(credentialsId: 'dockerkey', keyFileVariable: 'KEYFILE', usernameVariable: 'USERNAME')]) {
                         sh "ssh -o StrictHostKeyChecking=no -i ${KEYFILE} ${USERNAME}@docker 'docker pull ttl.sh/palmapp:1h'"
-                        sh "ssh -o StrictHostKeyChecking=no -i ${KEYFILE} ${USERNAME}@docker 'docker run --rm -dit -p 4444:4444 ttl.sh/palmapp:1h'"
+                        sh "ssh -o StrictHostKeyChecking=no -i ${KEYFILE} ${USERNAME}@docker 'docker rm -f myapp || true'"
+                        sh "ssh -o StrictHostKeyChecking=no -i ${KEYFILE} ${USERNAME}@docker 'docker run --rm -dit --name myapp -p 4444:4444 ttl.sh/palmapp:1h'"
                     }
                 }         
             }
+
+            stage('Deploy to k8s') {
+               steps {
+                    withKubeConfig(credentialsId: 'kubetoken', serverUrl: 'https://kubernetes:6443') {
+                        sh 'kubectl apply -f ./kubernetes/'
+                    }
+                }         
+            }
+
         }
     }
     
