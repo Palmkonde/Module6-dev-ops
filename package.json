@@ -1,0 +1,22 @@
+{
+  "name": "module6-dev-ops",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Palmkonde/Module6-dev-ops.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Palmkonde/Module6-dev-ops/issues"
+  },
+  "homepage": "https://github.com/Palmkonde/Module6-dev-ops#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
