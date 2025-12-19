@@ -5,7 +5,7 @@ pipeline {
     stage('Test') {
         steps {
             nodejs('node24') {
-                npm test
+                sh 'node test'
             }
         }
     }
