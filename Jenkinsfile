@@ -16,7 +16,44 @@ pipeline {
 
     stage('Test') {
         steps {
-            sh 'node --test'
+            sh 'npm test'
+        }
+    }
+
+    stage('Build Docker Image') {
+        stpes {
+            sh 'docker build --tag ttl.sh/palmapp:1h .'
+        }
+
+    }
+
+    stage('Push Docker Image') {
+        steps {
+            sh 'docker push ttl.sh/palmapp:1h'        
+        }
+    }
+
+    stage('Deploy') {
+        parallel {
+            stage('Deploy to target') {
+                steps {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'targetkey', keyFileVariable: 'KEYFILE', usernameVariable: 'USERNAME')]) {
+                        sh """
+                            ansible-playbook --inventory ./target/hosts.ini \
+                            --private-key ${KEYFILE} ./target/playbook.yml
+                        """
+                    }
+                }
+            }
+
+            stage('Deploy to docker') {
+               steps {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'dockerkey', keyFileVariable: 'KEYFILE', usernameVariable: 'USERNAME')]) {
+                        sh "ssh -o StrictHostKeyChecking=no -i ${KEYFILE} ${USERNAME}@docker 'docker pull ttl.sh/palmapp:1h'"
+                        sh "ssh -o StrictHostKeyChecking=no -i ${KEYFILE} ${USERNAME}@docker 'docker run --rm -dit -p 4444:4444 ttl.sh/palmapp:1h'"
+                    }
+                }         
+            }
         }
     }
     

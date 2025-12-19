@@ -1,0 +1,10 @@
+[Unit]
+Description=My Application Service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/node /home/laborant/index.js
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
