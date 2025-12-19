@@ -39,7 +39,7 @@ pipeline {
                 steps {
                     withCredentials([sshUserPrivateKey(credentialsId: 'targetkey', keyFileVariable: 'KEYFILE', usernameVariable: 'USERNAME')]) {
                         sh """
-                            ansible-playbook --inventory ./target/hosts.ini \
+                            ansible-playbook --inventory ./target/host.ini \
                             --private-key ${KEYFILE} ./target/playbook.yml
                         """
                     }
